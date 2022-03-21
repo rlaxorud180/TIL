@@ -1,0 +1,117 @@
+정적 웹페이지 : html css javascript 이용 / flat page 라고도 불림
+동적 웹페이지 :웹페이지에 요청 받은후 서버에서 추가적인 처리 과정 후 클라이언트에게 응답, 
+서버사이드에서 python java c 등이 사용됨
+static web page는 서버에 저장되어있는 내용을 가공없이 클라이언트에 보내주고
+Dynamic은 클라이언트에서 받은 요청에 따라 서버를 가공후 클라이언트에게 보내준다
+
+@@@@@프레임 워크**  데이터베이스 연동, 템플릿 형태 표준, 세션관리, 
+코드 재사용을 위한 클래스와 라이브러리모임
+
+
+@@@@MTV 패턴** model template view (controller)
+model : 데이터 구조를 정의하고 데이터베이스의 기록을 관리
+template : 파일 구조나 레이아웃 정의, 실제 내용을 보여주는데 사용
+view : http 요청을 수신하고 응답을 반환, model을 통해 요청을 충족시키는
+데이터 접근, template의 서식 설정
+
+request -> urls -> view -> response
+
+asgi : app이 비동기식 웹 서버와 연결 및 소통에 도움 
+wsgi : 일반적인 웹 서버와 연결 및 소통에 도움(훨씬 많이 이용됨)
+
+application: @@요청을 처리하고 페이지를 보여주는 역할
+앱하나당 하나의 역할 및 기능 단위로 작성한다
+
+LANGUAGE_CODE ="ko-kr" TIME_ZONE = "Asia/Seoul"
+USE_I18N = 국제화 번역 / USE_L10N = 데이터의 지역화
+
+short에는 추가적인 문자로 설명이 없고 {% now %} 안에쓰면 현재시간
+DATETIME_FORMAT
+SHORT_DATETIME_FORMAT
+DATE_FORMAT
+SHORT_DATE_FORMAT
+{% now "Y년 m월 d일 (D) h:i" %} // 년 월 일 요일 시간
+
+template : {% extends "base.html" %} {%block content %}{%endblock%}
+@@"DIRS"=[BASE_DIR/"templates"] ** 앤 처음 부터 따옴표 안에있음
+{%include %}를 통해 기능별로 html을 만들어 유지 보수가 가능
+
+Django 설계 철학 (템플릿 상속에있어서)
+1. 표현과 로직을 분리
+2. 중복을 배제
+
+app_name : app_name 을 설정해주고 templates 폴더 안에 app_name을 
+가지는 폴더를 하나 더 생성해주고 html파일을 넣어야 한다 
+(장고는 기본적으로 app_name/templates 파일들만 찾을 수 있으며 
+INSTALLED_APPS에 작성한 app 순서로 template을 검색 후 
+렌더링 하기 때문이다.
+
+auto now add=True : 처음 입력 시간을 알려준다
+auto now =True : 수정 시간을 알려준다
+
+static file : 별도의 처리없이그대로 보여주면 되는 파일(이미지 자바스크립트 css) 
+load , static 태그가 필요 (빌트인 태그가 아니라 로드(import)해야함) 
+{%load static%}
+<img src="{% static "articles/Dsds.jpg" %}">
+STATICFILES_DIRS : 최상단 폴더에 사진이 있을 때 추가해줘야함
+@@STATICFILES_DIRS = [BASE_DIR/ "static",]
+STATIC_URL : "/static/"
+
+http** : 웹에서 이루어지는 모든 데이터 교환의 기초이며 
+클라이언트-서버 프로토콜이다.
+주어진 리소스가 수행 할 작업을 나타내는 request method :get post put delete
+@@get** : 특정 리소스를 가져오도록 요청할 때 사용 DB의 변화없음 R의 역할
+@@post** : 서버로 데이터를 전송할 때 사용, 리소스 생성, 변경을 위해
+HTTP body에 담아 전송 CUD의 역할, csrf_token을 이용해 공격 방지
+
+variable routing : 주소를 변수로 사용하는 것
+@@스키마 : 데이터베이스의 자료구조, 표현방법, 관계등을 정의한 구조
+@@@ORM** : 언어 간의 호환되지 않는 데이터를 변환하는 프로그래밍 기법
+DB를 객체로 조작하기 위해 사용(object-relational-mapping)
+
+@@Migration : 장고가 모델에 생긴 변화를 반영하는 방법
+python manage.py makemigrations :model.py 변경한 것을 기반으로 새로운
+마이그래이션을 만들 때 사용
+@python manage.py migrate : 새로운 마이그래이션을 DB에 반영하기 위해 사용
+model.py에서의 변경 사항들과 DB의 스키마가 동기화를 이룸
+클래스 작성시 : class Article(models.Model)
+데이터정렬하는 방법 2가지 
+article = Article.objects.all()[::-1] 쿼리셋을 파이썬 문법을통해 바꿈
+article = Article.objects.orderby("-pk") 쿼리문에서 문법을 통해 이미 바꿈
+
+create admin
+python manage.py createsuperuser
+@@@@@
+class ArticleAdmin(admin.ModelAdmin):
+	pass
+admin.site.register(Article, ArticleAdmin) 까지 해줘야 함
+
+CSRF(사이트 간 요청 위조) Token
+
+article.delete() 
+삭제된 객체 수와 객체 유형당 삭제 수가 포함된 @딕셔너리를 반환
+(1, {"articles.Article": 1})
+
+**HTTP 요청을 받는 것부터 응답을 보내기까지의 과정을 MTV pattern을 
+참고하여 설명하시오**
+1. HTTP 요청을 받음
+2. urls.py에서 요청을 받아들여 적절한 view로 보내줌
+3. views.py에서 필요한 경우 model과 상호작용하거나 template을 읽어옴
+4. html의 형태로 HTTP응답을 보냄
+
+HTML 상속을 위해 써줘야 하는것
+{%extends 'base.html'%}
+
+static 파일 쓸때
+{% load static%}
+<img src="{%static  "articles/example.jpg" %}" alt="My image">
+
+date타임 적용 할때
+created_at = models.DateTimeField(auto_now_add=True)
+updated_at = models.DateTimeField(auto_now=True)
+
+admin urls 와 include 시키기
+urlpatterns = [
+    path('admin/', admin.site.urls),
+    path('articles/', include('articles.urls')),
+]
