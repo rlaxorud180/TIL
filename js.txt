@@ -1,0 +1,44 @@
+브라우저 머냐
+돔 봄 머냐 (대충)
+var let const 차이점 (표)
+원시타입(표에 있는 위에 세개) 참조타입(어레이, 함수)
+=== == 차이
+반복문 (for), 출력 결과
+조건문 반복문 코드 해석
+
+
+일급 객체
+함수 선언, 축약 형태
+메서드 외울 필요는 없는데 보고 지나가~
+shift
+forEach
+객체 - 키(문자열), 밸류(다 돼)
+자바스크립트는 JSON
+구조 분해 할당
+-------------------------------------------------
+브랜던 아이크(js 만든사람)
+ES6
+쿼리셀렉터 괄호 안에 뭐 들어가는지(선택자)
+createElement
+innerText innerHtml 차이점
+remove
+setAttribute getAttribute
+addEventListener listener 자리에 들어가는것 : 콜백함수
+preventDefault 역할
+
+
+
+
+파싱 x
+ecma x
+세미콜론 x
+스타일 가이드 x
+
+
+
+데이터 타입 
+typeof 다르게 나오는거?
+arrow function
+
+
+
